@@ -21,39 +21,29 @@ def filter_list(lst, keywords):
 
 
 def most_common_element(lst):
-    # 使用 Counter 对列表中的元素进行计数
     counts = Counter(lst)
-    # 找到出现次数最多的元素及其出现次数
     most_common = counts.most_common(1)
-    # 返回出现次数最多的元素
     return most_common[0][0]
 
 
 def extract_string_between_last_two_quotes(input_string):
-    # 找到最后一个单引号的索引位置
     last_quote_index = input_string.rfind("`")
 
-    # 找到倒数第二个单引号的索引位置
     second_last_quote_index = input_string.rfind("`", 0, last_quote_index)
 
-    # 提取最后两个单引号之间的字符串
     if second_last_quote_index != -1 and last_quote_index != -1:
         extracted_string = input_string[second_last_quote_index + 1:last_quote_index]
         return extracted_string
     else:
-        return "未找到足够的单引号"
+        return False
 
 
 def get_line_by_number(input_string, line_number):
-    # 按行拆分字符串
     lines = input_string.split('\n')
 
-    # 检查行号是否在有效范围内
     if 1 <= line_number <= len(lines):
-        # 返回对应行的字符串
         return lines[line_number - 1]
     else:
-        # 行号超出范围时返回空字符串或者抛出异常，取决于具体需求
         return "Invalid Line Number!"
 
 
@@ -90,7 +80,6 @@ def extract_outermost_brackets(input_string):
             if stack:
                 stack.pop()
                 if not stack:
-                    # 如果栈为空，说明当前右括号是最外层的右括号，不加入inner_part
                     continue
 
         if stack:
@@ -113,7 +102,6 @@ def extract_outermost_brackets_for_list(input_string):
             if stack:
                 stack.pop()
                 if not stack:
-                    # 如果栈为空，说明当前右括号是最外层的右括号，不加入inner_part
                     continue
 
         if stack:
@@ -136,27 +124,22 @@ def extract_parameters_from_method(method_declaration):
 
 
 class IntraProceduralAnalysis:
-    def __init__(self):
-        # 控制流图
+    def __init__(self)
         self.control_flow_graph = {}
-        # 数据流分析结果
+
         self.data_flow_analysis = {}
 
     def analyze_control_flow(self, code_lines):
-        # 构建控制流图
         current_id = 1
         for line in code_lines:
             if 'if' in line:
-                # 处理条件语句
                 self.control_flow_graph[current_id] = [current_id + 1, current_id + 2]
                 current_id += 2
             else:
-                # 处理顺序执行语句
                 self.control_flow_graph[current_id] = [current_id + 1]
                 current_id += 1
 
     def analyze_data_flow(self, code_lines):
-        # 数据流分析
         current_id = 1
         for line in code_lines:
             if 'def ' in line:
@@ -166,20 +149,16 @@ class IntraProceduralAnalysis:
                         self.data_flow_analysis[item] = set()
                     self.data_flow_analysis[item].add(current_id)
             if ' = ' in line:
-                # 处理赋值语句
                 parts = line.split('=')
                 variable = parts[0].strip()
                 if variable not in self.data_flow_analysis:
                     self.data_flow_analysis[variable] = set()
-                # 记录变量的定义点
                 self.data_flow_analysis[variable].add(current_id)
             elif 'print' in line:
-                # 处理打印语句
                 parts = line.split('(')
                 variable = parts[1].split(')')[0].strip()
                 if variable not in self.data_flow_analysis:
                     self.data_flow_analysis[variable] = set()
-                # 记录变量的使用点
                 self.data_flow_analysis[variable].add(current_id)
             elif 'return' in line:
                 if 'return' not in self.data_flow_analysis:
@@ -270,59 +249,36 @@ class IntraProceduralAnalysis:
             current_id += 1
 
     def perform_analysis(self, code):
-        # 将源码字符串拆分成行
         code_lines = code.split('\n')
-
-        # 执行控制流分析
         self.analyze_control_flow(code_lines)
-
-        # 执行数据流分析
         self.analyze_data_flow(code_lines)
 
 
 def find_lines_with_keyword(code, keyword):
     lines_with_keyword = []
 
-    # 将代码分成行
     code_lines = code.split('\n')
 
-    # 遍历每一行
     for line in code_lines:
-        # 检查关键字是否在该行中
         if keyword in line:
             lines_with_keyword.append(line)
 
-    # 将匹配的行拼接成一个字符串
     result_string = '\n'.join(lines_with_keyword)
 
     return result_string
 
 
 def infer_simple_type_from_assignment(assignment_string):
-    # 匹配赋值语句的正则表达式
     assignment_pattern = re.compile(r'^\s*([a-zA-Z_]\w*)\s*=\s*(.*)\s*$')
 
     match = assignment_pattern.match(assignment_string)
 
     if match:
         variable_name, value_str = match.groups()
-
-        # 匹配整数的正则表达式
-        int_pattern = re.compile(r'^[+-]?\d+$')
-
-        # 匹配浮点数的正则表达式
         float_pattern = re.compile(r'^[+-]?\d+\.\d+$')
-
-        # 匹配布尔值的正则表达式
         bool_pattern = re.compile(r'^(True|False)$', re.IGNORECASE)
-
-        # 匹配字符串的正则表达式
         str_pattern = re.compile(r'^\'(.*)\'$')
-
-        # 匹配bytes的正则表达式
         bytes_pattern = re.compile(r'^b\'(.*)\'$')
-
-        # 检查字符串格式并返回对应的类型
         if int_pattern.match(value_str):
             return "integer"
         elif float_pattern.match(value_str):
@@ -339,46 +295,16 @@ def infer_simple_type_from_assignment(assignment_string):
         return None
 
 
-def infer_simple_type_from_value(value_str):
-    # 匹配整数的正则表达式
-    int_pattern = re.compile(r'^[+-]?\d+$')
 
-    # 匹配浮点数的正则表达式
-    float_pattern = re.compile(r'^[+-]?\d+\.\d+$')
-
-    # 匹配布尔值的正则表达式
-    bool_pattern = re.compile(r'^(True|False)$', re.IGNORECASE)
-
-    # 匹配字符串的正则表达式
-    str_pattern = re.compile(r'^\'(.*)\'$')
-
-    # 匹配bytes的正则表达式
-    bytes_pattern = re.compile(r'^b\'(.*)\'$')
-
-    # 检查字符串格式并返回对应的类型
-    if int_pattern.match(value_str):
-        return "integer"
-    elif float_pattern.match(value_str):
-        return "float"
-    elif bool_pattern.match(value_str):
-        return "bool"
-    elif str_pattern.match(value_str):
-        return "str"
-    elif bytes_pattern.match(value_str):
-        return "byte"
-    else:
-        return None
 
 
 def generate_ast_and_detect_type(assignment_string):
     try:
-        # 使用 ast 模块解析赋值语句为 AST
+      
         parsed_ast = ast.parse(assignment_string, mode='exec')
 
-        # 提取赋值语句的右侧值部分
         value_node = parsed_ast.body[0].value
 
-        # 根据 AST 结构判断赋值语句的类型
         if isinstance(value_node, ast.Dict):
             return "dict"
         elif isinstance(value_node, ast.Set):
@@ -395,62 +321,47 @@ def generate_ast_and_detect_type(assignment_string):
 
 def extract_elements(input_string):
     result = {"substring_before_bracket": None, "inner_substrings": None}
-
-    # 找到等号并做标记
     equal_sign_index = input_string.find('=')
 
     if equal_sign_index != -1:
-        # 从等号位置开始继续扫描，直到遇到左括号或者左方括号
         for i in range(equal_sign_index, len(input_string)):
             if input_string[i] == '(':
-                # 从等号位置到左括号位置的子串
                 substring_before_parenthesis = input_string[equal_sign_index + 1:i].strip()
                 result["outer_type"] = "tuple"
                 result["substring_before_bracket"] = substring_before_parenthesis
 
-                # 倒着扫描，找到右括号位置
                 for j in range(len(input_string) - 1, i, -1):
                     if input_string[j] == ')':
-                        # 括号中间的子串
                         inner_substring = input_string[i + 1:j].strip()
 
-                        # 遍历括号中间的子串，检查是否含有 '[' 或者 '('
                         if '[' in inner_substring or '(' in inner_substring:
                             result["inner_substrings"] = inner_substring
                             result["len"] = 1
                         else:
-                            # 使用逗号分割子串
                             inner_substring_list = [part.strip() for part in inner_substring.split(',')]
                             result["len"] = len(inner_substring_list)
                             result["inner_substrings"] = inner_substring_list
                         break
 
-                # 结束外层循环
                 break
             elif input_string[i] == '[':
-                # 从等号位置到左方括号位置的子串
                 substring_before_bracket = input_string[equal_sign_index + 1:i].strip()
                 result["outer_type"] = "list"
                 result["substring_before_bracket"] = substring_before_bracket
 
-                # 倒着扫描，找到右方括号位置
                 for j in range(len(input_string) - 1, i, -1):
                     if input_string[j] == ']':
-                        # 括号中间的子串
                         inner_substring = input_string[i + 1:j].strip()
 
-                        # 遍历括号中间的子串，检查是否含有 '[' 或者 '('
                         if '[' in inner_substring or '(' in inner_substring:
                             result["inner_substrings"] = inner_substring
                             result["len"] = 1
                         else:
-                            # 使用逗号分割子串
                             inner_substring_list = [part.strip() for part in inner_substring.split(',')]
                             result["len"] = len(inner_substring_list)
                             result["inner_substrings"] = inner_substring_list
                         break
 
-                # 结束外层循环
                 break
     else:
         print(input_string)
@@ -508,14 +419,10 @@ def asignment_analysis(string_test, variable):
                     except:
                         part_type[part] = []
                         pass;
-                    # print(part_type[part])
-                    # 定义匹配类型的正则表达式
-                    type_pattern = re.compile(r'(str|int|float|bool|byte|list|tuple|dict|set|unknow)')
 
-                    # 使用findall方法找到所有匹配的类型
+                    type_pattern = re.compile(r'(str|int|float|bool|byte|list|tuple|dict|set|unknow)')
                     matches = type_pattern.findall(part_type[part])
 
-                    # 输出匹配的类型
                     if matches:
                         part_type[part] = ', '.join(matches)
                     else:
@@ -524,10 +431,6 @@ def asignment_analysis(string_test, variable):
                     part_type[part] = part_type_ir
             print(part_type)
             values = list(part_type.values())
-            # 使用Counter统计每个值的出现次数
-            # value_counts = Counter(values)
-
-            # 找到出现次数最多的值
             # most_common_value = value_counts.most_common(1)[0][0]
             if string_test_split["outer_type"] == "list":
                 if all(value == values[0] for value in values):
@@ -543,35 +446,11 @@ def asignment_analysis(string_test, variable):
     return result_type
 
 
-def find_string_in_file(filename, search_string, exact_match=True):
-    """
-    在文件中搜索字符串。
 
-    参数:
-    filename (str): 要搜索的文件名。
-    search_string (str): 需要搜索的字符串。
-    exact_match (bool): 如果为True，则进行整行匹配；如果为False，则进行部分匹配。
-
-    返回:
-    bool: 如果找到字符串，返回True；否则，返回False。
-    """
-    try:
-        with open(filename, 'r', encoding='utf-8') as file:
-            for line in file:
-                if (exact_match and line.strip() == search_string) or \
-                        (not exact_match and search_string in line.strip()):
-                    return True
-        return False
-    except FileNotFoundError:
-        print("指定的文件未找到。")
-        return False
-    except Exception as e:
-        print(f"读取文件时发生错误：{e}")
-        return False
 
 with open("./local_repo_usagegraph.json") as f:
     local_graph = json.load(f)
-# 示例用法
+
 with open(os.path.join("./data", "./testset_transformed.json")) as f:
     testset_trans = json.load(f)
 with open(os.path.join("./data", "./testset_source.json")) as f:
