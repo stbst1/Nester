@@ -13,9 +13,7 @@ for r, value in local_graph.items():
     zero = zero + 1
     #if zero == 500:
         #break;
-    # 使用split方法按照"--"分割字符串，得到各个部分的信息
     split_info = r.rsplit(".py", 1)
-    # 将分割后的信息分别赋值给r字典的各个键
     r = {
         "file": split_info[0] + ".py",
         "loc": split_info[1][2:].split("--")[0],
@@ -38,7 +36,6 @@ for r, value in local_graph.items():
     #    exit(1)
     if part_to_remove not in value:
         result_dict[r1] = {}
-        # 更新字典中的值
     else:
         if scope == "arg":
             arg_list += 1
