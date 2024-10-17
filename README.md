@@ -1,6 +1,6 @@
 # Nester Dynamic Type Inference Tool Guide
 
-This guide explains how to run the Nester dynamic type inference tool using the `torchrun` command. In this example, we use a pre-trained checkpoint and configure the model's maximum sequence length and batch size.
+This is the tool guide released for the paper "Neuro-Symbolic Language Models for Type Inference."
 
 ## Requirements
 
@@ -52,7 +52,7 @@ python nester/nester.py -s predictions.json -t testset.json -m -c -i
 
 Below is an example illustration from Nester:
 
-(Nester_image.png)  // You should replace this placeholder with the actual image link or embed the image as needed.
+![Nester Illustration](Nester_image.png)
 
 ### References
 
