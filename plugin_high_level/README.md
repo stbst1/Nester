@@ -1,57 +1,64 @@
-# vscode-plogin-demo README
+# vscode-type-infer-plugin README
 
-This is the README for your extension "vscode-plogin-demo". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "vscode-type-infer-plugin". This extension assists Python developers by automatically suggesting the top 5 type annotations whenever a type hint arrow (`->`) is encountered in the code. After providing a brief description, the README includes detailed sections on the extension's features, requirements, settings, and more.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+This extension offers real-time type inference suggestions within VS Code. It activates when the user types or navigates to a function's type hint arrow (`->`). Below are the specifics:
 
-For example if there is an image subfolder under your extension project workspace:
+- **Type Hint Suggestions**: Automatically displays the top 5 type annotations in a dropdown menu for easy selection.
+- **Interactive Learning**: Users can click a 'Learn More' button to generate a high-level program explanation, enhancing understanding of suggested type annotations.
 
-\!\[feature X\]\(images/feature-x.png\)
+For example, if there is an image subfolder under your extension project workspace:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+\!\[Type Annotation Suggestions\]\(images/type-annotation-suggestions.png\)
+
+> Tip: Utilize animations to demonstrate the extension in action, such as showing the dropdown in use and the generation of explanatory text.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension requires:
+- Visual Studio Code 1.50.0 or higher.
+- An active internet connection for fetching type annotations and generating explanations.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+This extension contributes to the following settings via the `contributes.configuration` extension point:
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `typeInfer.enable`: Enable/disable this extension.
+* `typeInfer.explainMode`: Set to `true` to automatically display explanations for selected annotations.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Delay in suggestions for large projects.
+- Inaccuracies in type suggestions for highly dynamic or complex code.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+Keep your users informed with updates to your extension.
 
 ### 1.0.0
 
-Initial release of ...
+Initial release:
+- Real-time type annotation suggestions.
+- Interactive explanations for type annotations.
 
 ### 1.0.1
 
-Fixed issue #.
+Bug fixes:
+- Improved suggestion accuracy.
+- Reduced lag in displaying suggestions.
 
 ### 1.1.0
 
-Added features X, Y, and Z.
+New features:
+- Added support for generating high-level program explanations directly in the editor.
 
 ---
 
 ## Working with Markdown
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+Visual Studio Code can be used to author your README. Here are some useful editor keyboard shortcuts:
 
 * Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
 * Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
