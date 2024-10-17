@@ -44,7 +44,7 @@ x = np.arange(len(groups))  # the label locations
 
 # Plotting the data
 fig, ax = plt.subplots(figsize=(14, 6))
-ax.set_facecolor('none')  # 设置背景透明
+ax.set_facecolor('none')  
 ax.grid(True, zorder=0, axis='y')
 
 width = 0.25  # the width of the bars
@@ -63,7 +63,7 @@ bars3 = ax.bar(x + width, mean_data[:, 2], width, label='Step 3', color=colors[2
 for rects in [bars1, bars2, bars3]:
     for rect in rects:
         height = rect.get_height()
-        ax.annotate(f'{height:.2f}', xy=(rect.get_x() + rect.get_width() / 2, height), xytext=(0, 5),  # 增加垂直偏移量
+        ax.annotate(f'{height:.2f}', xy=(rect.get_x() + rect.get_width() / 2, height), xytext=(0, 5),  
                     textcoords="offset points", ha='center', va='bottom', fontsize=18, rotation=90)
 
 # Set labels and ticks
