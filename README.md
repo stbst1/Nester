@@ -21,7 +21,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Download the dataset [here](#) (click the link to download the dataset).
+1. To extract the file, use the following command:
+```bash
+unzip path/to/data.zip -d path/to/data
 2. Set up [Llama](https://ai.meta.com/llama/) and [CodeLlama](https://ai.meta.com/blog/large-language-model-llama-codellama/) locally.
 3. Run Nester on CodeLlama with the dataset using the following command:
 
