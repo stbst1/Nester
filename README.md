@@ -16,7 +16,7 @@ pip install -r requirements.txt
 ## Usage
 
 1. To extract the file, use the following command:
-   unzip path/to/data.zip -d path/to/data
+   unzip data/data.zip -d path/to/data
 
 2. Set up Llama and CodeLlama locally:
    - Llama: https://ai.meta.com/llama/
