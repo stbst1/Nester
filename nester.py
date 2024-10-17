@@ -17,36 +17,36 @@ from collections import Counter
 def filter_list(lst, keywords):
     return [item for item in lst if item in keywords]
 def most_common_element(lst):
-    # 使用 Counter 对列表中的元素进行计数
+    # Count the elements in the list using Counter
     counts = Counter(lst)
-    # 找到出现次数最多的元素及其出现次数
+    # Find the most common element and its count
     most_common = counts.most_common(1)
-    # 返回出现次数最多的元素
+    # Return the most common element
     return most_common[0][0]
 
 def extract_string_between_last_two_quotes(input_string):
-    # 找到最后一个单引号的索引位置
+    # Find the index of the last single quote
     last_quote_index = input_string.rfind("`")
 
-    # 找到倒数第二个单引号的索引位置
+    # Find the index of the second last single quote
     second_last_quote_index = input_string.rfind("`", 0, last_quote_index)
 
-    # 提取最后两个单引号之间的字符串
+    # Extract the string between the last two single quotes
     if second_last_quote_index != -1 and last_quote_index != -1:
         extracted_string = input_string[second_last_quote_index + 1:last_quote_index]
         return extracted_string
     else:
-        return "未找到足够的单引号"
+        return "Not enough single quotes found"
 def get_line_by_number(input_string, line_number):
-    # 按行拆分字符串
+    # Split the string by lines
     lines = input_string.split('\n')
 
-    # 检查行号是否在有效范围内
+    # Check if the line number is within a valid range
     if 1 <= line_number <= len(lines):
-        # 返回对应行的字符串
+        # Return the string of the corresponding line
         return lines[line_number - 1]
     else:
-        # 行号超出范围时返回空字符串或者抛出异常，取决于具体需求
+        # If the line number is out of range, return an empty string or throw an exception, depending on the specific need
         return "Invalid Line Number!"
 def match_type_for_cot(string):
     pattern = re.compile(r'\`[a-zA-Z\.]+(?:\[[a-zA-Z\. ]+(?:\,[a-zA-Z\. ]+)*\])*\`')
@@ -64,7 +64,7 @@ def match_type_for_cot(string):
             return res
     else:
         res = matched[-1].replace("`", "").replace('NoneType', 'None')#.replace("is ", "")
-        if (" " in res and "[" not in res) or res.lower() == "unknown":
+        if (" " in res and "[" not in res) or res.lower == "unknown":
             res = None
         return res
 def extract_outermost_brackets(input_string):
@@ -79,7 +79,7 @@ def extract_outermost_brackets(input_string):
             if stack:
                 stack.pop()
                 if not stack:
-                    # 如果栈为空，说明当前右括号是最外层的右括号，不加入inner_part
+                    # If the stack is empty, it means the current right bracket is the outermost right bracket, do not add to inner_part
                     continue
 
         if stack:
@@ -101,7 +101,7 @@ def extract_outermost_brackets_for_list(input_string):
             if stack:
                 stack.pop()
                 if not stack:
-                    # 如果栈为空，说明当前右括号是最外层的右括号，不加入inner_part
+                    # If the stack is empty, it means the current right bracket is the outermost right bracket, do not add to inner_part
                     continue
 
         if stack:
@@ -123,66 +123,66 @@ def extract_parameters_from_method(method_declaration):
 
 class IntraProceduralAnalysis:
     def __init__(self):
-        # 控制流图
+        # Control flow graph
         self.control_flow_graph = {}
-        # 数据流分析结果
+        # Data flow analysis results
         self.data_flow_analysis = {}
 
     def analyze_control_flow(self, code_lines):
-        # 构建控制流图
+        # Build control flow graph
         current_id = 1
         for line in code_lines:
             if 'if' in line:
-                # 处理条件语句
+                # Handle conditional statements
                 self.control_flow_graph[current_id] = [current_id + 1, current_id + 2]
                 current_id += 2
             else:
-                # 处理顺序执行语句
+                # Handle sequential execution statements
                 self.control_flow_graph[current_id] = [current_id + 1]
                 current_id += 1
 
     def analyze_data_flow(self, code_lines):
-        # 数据流分析
+        # Data flow analysis
         current_id = 1
         for line in code_lines:
             if 'def ' in line:
                 parameters = extract_parameters_from_method(line)
                 for item in parameters:
-                    if item not in self.data_flow_analysis:
-                        self.data_flow_analysis[item] = set()
-                    self.data_flow_analysis[item].add(current_id)
+                    if item not in this.data_flow_analysis:
+                        this.data_flow_analysis[item] = set()
+                    this.data_flow_analysis[item].add(current_id)
             if ' = ' in line:
-                # 处理赋值语句
+                # Handle assignment statements
                 parts = line.split('=')
                 variable = parts[0].strip()
-                if variable not in self.data_flow_analysis:
-                    self.data_flow_analysis[variable] = set()
-                # 记录变量的定义点
-                self.data_flow_analysis[variable].add(current_id)
+                if variable not in this.data_flow_analysis:
+                    this.data_flow_analysis[variable] = set()
+                # Record the definition point of the variable
+                this.data_flow_analysis[variable].add(current_id)
             elif 'print' in line:
-                # 处理打印语句
+                # Handle print statements
                 parts = line.split('(')
                 variable = parts[1].split(')')[0].strip()
-                if variable not in self.data_flow_analysis:
-                    self.data_flow_analysis[variable] = set()
-                # 记录变量的使用点
-                self.data_flow_analysis[variable].add(current_id)
+                if variable not in this.data_flow_analysis:
+                    this.data_flow_analysis[variable] = set()
+                # Record the usage point of the variable
+                this.data_flow_analysis[variable].add(current_id)
             elif 'return' in line:
-                if 'return' not in self.data_flow_analysis:
-                    self.data_flow_analysis['return'] = set()
+                if 'return' not in this.data_flow_analysis:
+                    this.data_flow_analysis['return'] = set()
                 pattern = r'return\s+(.*)'
                 match = re.search(pattern, line)
                 #print(match.group(1))
-                #print(self.data_flow_analysis[match.group(1)])
+                #print(this.data_flow_analysis[match.group(1)])
                 if match:
                     if match.group(1) == "None":
                         pattern = r'.*'
                         man = re.search(pattern,'None')
-                        self.data_flow_analysis['return'].add(man.group(0))
+                        this.data_flow_analysis['return'].add(man.group(0))
                         current_id += 1
                         continue;
-                    if match.group(1) in self.data_flow_analysis:
-                        self.data_flow_analysis['return'].add(match.group(1))
+                    if match.group(1) in this.data_flow_analysis:
+                        this.data_flow_analysis['return'].add(match.group(1))
                         current_id += 1
                         continue;
                     blanket = 0
@@ -190,10 +190,10 @@ class IntraProceduralAnalysis:
                         result_outer, result_inner = extract_outermost_brackets(match.group(1))
                         blanket = 1
                         if '.' not in result_outer:
-                            #self.data_flow_analysis['return'].add(result_outer)
+                            #this.data_flow_analysis['return'].add(result_outer)
                             pattern = r'.*'
                             man = re.search(pattern, result_outer)
-                            self.data_flow_analysis['return'].add(man.group(0))
+                            this.data_flow_analysis['return'].add(man.group(0))
                             current_id += 1
                             continue;
                     if '.' in match.group(1):
@@ -202,29 +202,29 @@ class IntraProceduralAnalysis:
                         else:
                             parts = match.group(1).split('.', 1)
                         if len(parts) > 1:
-                            self.data_flow_analysis['return'].add(parts[0])
+                            this.data_flow_analysis['return'].add(parts[0])
                             current_id += 1
                             continue;
                         else:
-                            self.data_flow_analysis['return'].add(line)
+                            this.data_flow_analysis['return'].add(line)
                             current_id += 1
                             continue;
                 elif 'yield' in line:
-                    if 'yield' not in self.data_flow_analysis:
-                        self.data_flow_analysis['return'] = set()
+                    if 'yield' not in this.data_flow_analysis:
+                        this.data_flow_analysis['return'] = set()
                     pattern = r'yield\s+(.*)'
                     match = re.search(pattern, line)
                     # print(match.group(1))
-                    # print(self.data_flow_analysis[match.group(1)])
+                    # print(this.data_flow_analysis[match.group(1)])
                     if match:
                         if match.group(1) == "None":
                             pattern = r'.*'
                             man = re.search(pattern, 'None')
-                            self.data_flow_analysis['return'].add(man.group(0))
+                            this.data_flow_analysis['return'].add(man.group(0))
                             current_id += 1
                             continue;
-                        if match.group(1) in self.data_flow_analysis:
-                            self.data_flow_analysis['return'].add(match.group(1))
+                        if match.group(1) in this.data_flow_analysis:
+                            this.data_flow_analysis['return'].add(match.group(1))
                             current_id += 1
                             continue;
                         blanket = 0
@@ -232,7 +232,7 @@ class IntraProceduralAnalysis:
                             result_outer, result_inner = extract_outermost_brackets(match.group(1))
                             blanket = 1
                             if '.' not in result_outer:
-                                self.data_flow_analysis['return'].add(result_outer)
+                                this.data_flow_analysis['return'].add(result_outer)
                                 current_id += 1
                                 continue;
                         if '.' in match.group(1):
@@ -241,49 +241,48 @@ class IntraProceduralAnalysis:
                             else:
                                 parts = match.group(1).split('.', 1)
                             if len(parts) > 1:
-                                self.data_flow_analysis['return'].add(parts[0])
+                                this.data_flow_analysis['return'].add(parts[0])
                                 current_id += 1
                                 continue;
                             else:
-                                self.data_flow_analysis['return'].add(line)
+                                this.data_flow_analysis['return'].add(line)
                                 current_id += 1
                                 continue;
                 else:
                     pattern = r'.*'
                     man = re.search(pattern, 'None')
-                    self.data_flow_analysis['return'].add(man.group(0))
-
+                    this.data_flow_analysis['return'].add(man.group(0))
 
             current_id += 1
 
     def perform_analysis(self, code):
-        # 将源码字符串拆分成行
+        # Split the source code string into lines
         code_lines = code.split('\n')
 
-        # 执行控制流分析
-        self.analyze_control_flow(code_lines)
+        # Perform control flow analysis
+        this.analyze_control_flow(code_lines)
 
-        # 执行数据流分析
-        self.analyze_data_flow(code_lines)
+        # Perform data flow analysis
+        this.analyze_data_flow(code_lines)
 def find_lines_with_keyword(code, keyword):
     lines_with_keyword = []
 
-    # 将代码分成行
+    # Split the code into lines
     code_lines = code.split('\n')
 
-    # 遍历每一行
+    # Traverse each line
     for line in code_lines:
-        # 检查关键字是否在该行中
+        # Check if the keyword is in that line
         if keyword in line:
             lines_with_keyword.append(line)
 
-    # 将匹配的行拼接成一个字符串
+    # Concatenate the matching lines into a string
     result_string = '\n'.join(lines_with_keyword)
 
     return result_string
 
 def infer_simple_type_from_assignment(assignment_string):
-    # 匹配赋值语句的正则表达式
+    # Regular expression to match assignment statements
     assignment_pattern = re.compile(r'^\s*([a-zA-Z_]\w*)\s*=\s*(.*)\s*$')
 
     match = assignment_pattern.match(assignment_string)
@@ -291,22 +290,22 @@ def infer_simple_type_from_assignment(assignment_string):
     if match:
         variable_name, value_str = match.groups()
 
-        # 匹配整数的正则表达式
+        # Regular expression to match integers
         int_pattern = re.compile(r'^[+-]?\d+$')
 
-        # 匹配浮点数的正则表达式
+        # Regular expression to match floating numbers
         float_pattern = re.compile(r'^[+-]?\d+\.\d+$')
 
-        # 匹配布尔值的正则表达式
+        # Regular expression to match boolean values
         bool_pattern = re.compile(r'^(True|False)$', re.IGNORECASE)
 
-        # 匹配字符串的正则表达式
+        # Regular expression to match strings
         str_pattern = re.compile(r'^\'(.*)\'$')
 
-        # 匹配bytes的正则表达式
+        # Regular expression to match bytes
         bytes_pattern = re.compile(r'^b\'(.*)\'$')
 
-        # 检查字符串格式并返回对应的类型
+        # Check the string format and return the corresponding type
         if int_pattern.match(value_str):
             return "integer"
         elif float_pattern.match(value_str):
@@ -322,22 +321,22 @@ def infer_simple_type_from_assignment(assignment_string):
     else:
         return None
 def infer_simple_type_from_value(value_str):
-    # 匹配整数的正则表达式
+    # Regular expression to match integers
     int_pattern = re.compile(r'^[+-]?\d+$')
 
-    # 匹配浮点数的正则表达式
+    # Regular expression to match floating numbers
     float_pattern = re.compile(r'^[+-]?\d+\.\d+$')
 
-    # 匹配布尔值的正则表达式
+    # Regular expression to match boolean values
     bool_pattern = re.compile(r'^(True|False)$', re.IGNORECASE)
 
-    # 匹配字符串的正则表达式
+    # Regular expression to match strings
     str_pattern = re.compile(r'^\'(.*)\'$')
 
-    # 匹配bytes的正则表达式
+    # Regular expression to match bytes
     bytes_pattern = re.compile(r'^b\'(.*)\'$')
 
-    # 检查字符串格式并返回对应的类型
+    # Check the string format and return the corresponding type
     if int_pattern.match(value_str):
         return "integer"
     elif float_pattern.match(value_str):
@@ -354,13 +353,13 @@ def infer_simple_type_from_value(value_str):
 
 def generate_ast_and_detect_type(assignment_string):
     try:
-        # 使用 ast 模块解析赋值语句为 AST
+        # Use the ast module to parse the assignment statement into an AST
         parsed_ast = ast.parse(assignment_string, mode='exec')
 
-        # 提取赋值语句的右侧值部分
+        # Extract the right-hand value part of the assignment statement
         value_node = parsed_ast.body[0].value
 
-        # 根据 AST 结构判断赋值语句的类型
+        # Judge the type of the assignment statement based on the AST structure
         if isinstance(value_node, ast.Dict):
             return "dict"
         elif isinstance(value_node, ast.Set):
@@ -376,61 +375,61 @@ def generate_ast_and_detect_type(assignment_string):
 def extract_elements(input_string):
     result = {"substring_before_bracket": None, "inner_substrings": None}
 
-    # 找到等号并做标记
+    # Find the equal sign and mark it
     equal_sign_index = input_string.find('=')
 
     if equal_sign_index != -1:
-        # 从等号位置开始继续扫描，直到遇到左括号或者左方括号
+        # Continue scanning from the equal sign position until encountering a left parenthesis or left square bracket
         for i in range(equal_sign_index, len(input_string)):
             if input_string[i] == '(':
-                # 从等号位置到左括号位置的子串
+                # Substring from the equal sign position to the left parenthesis position
                 substring_before_parenthesis = input_string[equal_sign_index + 1:i].strip()
                 result["outer_type"] = "tuple"
                 result["substring_before_bracket"] = substring_before_parenthesis
 
-                # 倒着扫描，找到右括号位置
+                # Scan backwards to find the right parenthesis position
                 for j in range(len(input_string) - 1, i, -1):
                     if input_string[j] == ')':
-                        # 括号中间的子串
+                        # Substring inside the brackets
                         inner_substring = input_string[i + 1:j].strip()
 
-                        # 遍历括号中间的子串，检查是否含有 '[' 或者 '('
+                        # Traverse the substring inside the brackets, check if it contains '[' or '('
                         if '[' in inner_substring or '(' in inner_substring:
                             result["inner_substrings"] = inner_substring
                             result["len"] = 1
                         else:
-                            # 使用逗号分割子串
+                            # Split the substring using commas
                             inner_substring_list = [part.strip() for part in inner_substring.split(',')]
                             result["len"] = len(inner_substring_list)
                             result["inner_substrings"] = inner_substring_list
                         break
 
-                # 结束外层循环
+                # End the outer loop
                 break
             elif input_string[i] == '[':
-                # 从等号位置到左方括号位置的子串
+                # Substring from the equal sign position to the left square bracket position
                 substring_before_bracket = input_string[equal_sign_index + 1:i].strip()
                 result["outer_type"] = "list"
                 result["substring_before_bracket"] = substring_before_bracket
 
-                # 倒着扫描，找到右方括号位置
+                # Scan backwards to find the right square bracket position
                 for j in range(len(input_string) - 1, i, -1):
                     if input_string[j] == ']':
-                        # 括号中间的子串
+                        # Substring inside the brackets
                         inner_substring = input_string[i + 1:j].strip()
 
-                        # 遍历括号中间的子串，检查是否含有 '[' 或者 '('
+                        # Traverse the substring inside the brackets, check if it contains '[' or '('
                         if '[' in inner_substring or '(' in inner_substring:
                             result["inner_substrings"] = inner_substring
                             result["len"] = 1
                         else:
-                            # 使用逗号分割子串
+                            # Split the substring using commas
                             inner_substring_list = [part.strip() for part in inner_substring.split(',')]
                             result["len"] = len(inner_substring_list)
                             result["inner_substrings"] = inner_substring_list
                         break
 
-                # 结束外层循环
+                # End the outer loop
                 break
     else:
         print(input_string)
@@ -468,7 +467,7 @@ def asignment_analysis(string_test, variable):
                         [
                             {
                                 "role": "system",
-                                "content": "You are a helpful, respectful and honest assistant. You can the the type of the variable when i give you source code. Please provide me with an answer in the following format:the type of the variable is str/int/float/bool/byte/list/tuple/dict/set/unknow"
+                                "content": "You are a helpful, respectful and honest assistant. You can determine the type of the variable when I provide you with source code. Please provide me with an answer in the following format:the type of the variable is str/int/float/bool/byte/list/tuple/dict/set/unknow"
                             },
                             {
                                 "role": "user",
@@ -488,13 +487,13 @@ def asignment_analysis(string_test, variable):
                         part_type[part] = []
                         pass;
                     # print(part_type[part])
-                    # 定义匹配类型的正则表达式
+                    # Define a regular expression to match types
                     type_pattern = re.compile(r'(str|int|float|bool|byte|list|tuple|dict|set|unknow)')
 
-                    # 使用findall方法找到所有匹配的类型
+                    # Use findall method to find all matching types
                     matches = type_pattern.findall(part_type[part])
 
-                    # 输出匹配的类型
+                    # Output the matching types
                     if matches:
                         part_type[part] = ', '.join(matches)
                     else:
@@ -503,10 +502,10 @@ def asignment_analysis(string_test, variable):
                     part_type[part] = part_type_ir
             print(part_type)
             values = list(part_type.values())
-            # 使用Counter统计每个值的出现次数
+            # Use Counter to count the occurrences of each value
             # value_counts = Counter(values)
 
-            # 找到出现次数最多的值
+            # Find the most common value
             # most_common_value = value_counts.most_common(1)[0][0]
             if string_test_split["outer_type"] == "list":
                 if all(value == values[0] for value in values):
@@ -521,7 +520,7 @@ def asignment_analysis(string_test, variable):
                     result_type = None
     return result_type
 def extract_last_word(sentence):
-    # 使用正则表达式查找最后一个单词
+    # Use a regular expression to find the last word
     match = re.search(r'\b(\w+)\b[^\w]*$', sentence)
     if match:
         return match.group(1)
@@ -529,7 +528,7 @@ def extract_last_word(sentence):
         return None
 with open("./local_repo_usagegraph.json") as f:
     local_graph = json.load(f)
-# 示例用法
+# Example usage
 with open(os.path.join("./data", "./testset_transformed.json")) as f:
     testset_trans = json.load(f)
 with open(os.path.join("./data", "./testset_source.json")) as f:
@@ -602,7 +601,7 @@ def main(
                         [
                             {
                                 "role": "system",
-                                "content": "You are a helpful, respectful and honest assistant. You can infer the type of the variable when i give you source code and some user-defined type hints. Please provide me with an answer in the following format:the type of the variable is `here is your predict`"
+                                "content": "You are a helpful, respectful and honest assistant. You can infer the type of the variable when I give you source code and some user-defined type hints. Please provide me with an answer in the following format:the type of the variable is `here is your predict`"
                             },
                             {
                                 "role": "user",
@@ -760,7 +759,7 @@ def main(
                         [
                             {
                                 "role": "system",
-                                "content": "You are a helpful, respectful and honest assistant. You can infer local type when i give you source code and some user-defined type hints. Please provide me with an answer in the following format:the variable type is `here is your predict`"
+                                "content": "You are a helpful, respectful and honest assistant. You can infer local type when I give you source code and some user-defined type hints. Please provide me with an answer in the following format:the variable type is `here is your predict`"
                             },
                             {
                                 "role": "user",
@@ -826,10 +825,10 @@ def main(
             #    exit(1)
             string_test = testset[key]
             user_types = test_user_types[key][1]
-            # 创建 IntraProceduralAnalysis 实例
+            # Create an IntraProceduralAnalysis instance
             intra_procedural_analysis = IntraProceduralAnalysis()
 
-            # 执行分析
+            # Perform analysis
             try:
                 intra_procedural_analysis.perform_analysis(testset[key])
             except:
@@ -837,7 +836,7 @@ def main(
                     [
                         {
                             "role": "system",
-                            "content": "You are a helpful, respectful and honest assistant. You can infer return type when i give you source code and some user-defined type hints. Please provide me with an answer in the following format:the return type of the function is `here is your predict`"
+                            "content": "You are a helpful, respectful and honest assistant. You can infer return type when I give you source code and some user-defined type hints. Please provide me with an answer in the following format:the return type of the function is `here is your predict`"
                         },
                         {
                             "role": "user",
@@ -859,7 +858,7 @@ def main(
                     predictions[key] = []
                     pass;
                 continue
-            # 输出控制流图和数据流分析结果
+            # Output the control flow graph and data flow analysis results
             control_graph = intra_procedural_analysis.control_flow_graph
             data_graph = intra_procedural_analysis.data_flow_analysis
             #print(data_graph)
@@ -929,7 +928,7 @@ def main(
                 #print("the same" in last_line)
 
                 if ("do not know" in first_line) or (
-                        ("Sure" in first_line) and (("do not know" in last_line) or ("the same" in last_line))):  # 静态分析
+                        ("Sure" in first_line) and (("do not know" in last_line) or ("the same" in last_line))):  # Static analysis
                     return_type_static[line_return] = 1
                 elif "Sure" in first_line and "do not know" not in last_line:
                     #print("key:")
@@ -948,7 +947,7 @@ def main(
                     #print(line_return)
                     try:
                         return_type[line_return] = first_line
-                    except:#这个地方key,value是first_line:A: the return type is 'string'.line_return:return '<span class="%s">%s</span>' % (klass, text)，不知道为啥报错，最了
+                    except:#This is the key,value is first_line:A: the return type is 'string'.line_return:return '<span class="%s">%s</span>' % (klass, text)，don't know why it reports an error, the last
                         pass
                     continue
 
@@ -1311,7 +1310,7 @@ def main(
                     [
                         {
                             "role": "system",
-                            "content": "You are a helpful, respectful and honest assistant. You can infer return type when i give you source code and some user-defined type hints. Please provide me with an answer in the following format:the return type of the function is `here is your predict`"
+                            "content": "You are a helpful, respectful and honest assistant. You can infer return type when I give you source code and some user-defined type hints. Please provide me with an answer in the following format:the return type of the function is `here is your predict`"
                         },
                         {
                             "role": "user",
