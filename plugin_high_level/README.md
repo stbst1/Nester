@@ -9,11 +9,6 @@ This extension offers real-time type inference suggestions within VS Code. It ac
 - **Type Hint Suggestions**: Automatically displays the top 5 type annotations in a dropdown menu for easy selection.
 - **Interactive Learning**: Users can click a 'Learn More' button to generate a high-level program explanation, enhancing understanding of suggested type annotations.
 
-For example, if there is an image subfolder under your extension project workspace:
-
-\!\[Type Annotation Suggestions\]\(images/type-annotation-suggestions.png\)
-
-> Tip: Utilize animations to demonstrate the extension in action, such as showing the dropdown in use and the generation of explanatory text.
 
 ## Requirements
 
