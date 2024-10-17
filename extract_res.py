@@ -24,7 +24,7 @@ def match_type_for_cot(string):
             res = None
         return res
 
-#规则
+#rules
 with open("./NSTI_after_continue1_llama3.json") as f:
     NSTI_res_unpreprocessed = json.load(f)
 NSTI_dedundancy1_simple = {}
