@@ -55,5 +55,5 @@ Below is an example illustration from Nester:
 
 ### Results
 
-We include the predictions of Nester in our dataset and its ablation results in the ```predictions/``` folder
+We include the predictions of Nester in our dataset and its ablation results in the ```predictions/``` folder.
 
