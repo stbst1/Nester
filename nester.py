@@ -764,7 +764,7 @@ def main(
 
 
                 if ("do not know" in first_line) or (
-                        ("Sure" in first_line) and (("do not know" in last_line) or ("the same" in last_line))):  # 静态分析
+                        ("Sure" in first_line) and (("do not know" in last_line) or ("the same" in last_line))): 
                     return_type_static[line_return] = 1
                 elif "Sure" in first_line and "do not know" not in last_line:
 
