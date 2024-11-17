@@ -11,13 +11,15 @@ This is the guide released for the paper "Neuro-Symbolic Language Models for Typ
 
 Clone this repository and run the following command in the root directory to install the required dependencies:
 
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 ## Usage
 
 1. To extract the file, use the following command:
 ```
-unzipdata/data.zip -d path/to/data
+unzip data/data.zip -d path/to/data
 ```
 
 3. Set up language models such as Llama and CodeLlama locally:
