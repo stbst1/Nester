@@ -36,11 +36,13 @@ This command executes the 'nester.py' script on a single processing node, using 
 
 To evaluate the Nester results, use the following command to calculate the Exact Match metric:
 
-```python nester/evaluate.py -s predictions.json -t testset.json -m -c```
+```python nester/evaluate.py -s predictions.json -t testset.json -m -c
+```
 
 For match to parametric evaluation, simply add the `-i` option:
 
-```python nester/evaluate.py -s predictions.json -t testset.json -m -c -i```
+```python nester/evaluate.py -s predictions.json -t testset.json -m -c -i
+```
 
 
 ### Environment Requirements
