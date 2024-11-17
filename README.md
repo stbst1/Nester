@@ -23,7 +23,7 @@ Clone this repository and run the following command in the root directory to ins
    - CodeLlama: https://ai.meta.com/blog/large-language-model-llama-codellama/
 
 3. Run Nester on CodeLlama with the dataset using the following command:
-   \`\`\`bash
+\`\`\`bash
 torchrun --nproc_per_node=[number of nodes] nester.py --ckpt_dir=[checkpoint directory] --tokenizer_path=[tokenizer model path] --max_seq_len=[maximum sequence length] --max_batch_size=[maximum batch size]
 \`\`\`
 The following command example shows how to set sequence length and batch size to run code with the codelama-7B-instruct version checkpoint and word divider:
