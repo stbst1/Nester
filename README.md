@@ -16,8 +16,8 @@ Clone this repository and run the following command in the root directory to ins
 ## Usage
 
 1. To extract the file, use the following command:
-   ```unzip
- data/data.zip -d path/to/data
+```
+unzipdata/data.zip -d path/to/data
 ```
 
 3. Set up language models such as Llama and CodeLlama locally:
@@ -38,14 +38,14 @@ This command executes the 'nester.py' script on a single processing node, using 
 
 To evaluate the Nester results, use the following command to calculate the Exact Match metric:
 
-```python
- nester/evaluate.py -s predictions.json -t testset.json -m -c
+```
+python nester/evaluate.py -s predictions.json -t testset.json -m -c
 ```
 
 For match to parametric evaluation, simply add the `-i` option:
 
-```python
- nester/evaluate.py -s predictions.json -t testset.json -m -c -i
+```
+python nester/evaluate.py -s predictions.json -t testset.json -m -c -i
 ```
 
 
