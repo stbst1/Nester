@@ -36,17 +36,16 @@ This command executes the 'nester.py' script on a single processing node, using 
 
 To evaluate the Nester results, use the following command to calculate the Exact Match metric:
 
-```python nester/nester.py -s predictions.json -t testset.json -m -c```
+```python nester/evaluate.py -s predictions.json -t testset.json -m -c```
 
 For match to parametric evaluation, simply add the `-i` option:
 
-```python nester/nester.py -s predictions.json -t testset.json -m -c -i```
+```python nester/evaluate.py -s predictions.json -t testset.json -m -c -i```
 
 
 ### Environment Requirements
 
 - PyTorch
-- Hardware resources should be sufficient to support large-scale model computations. It is recommended to use a GPU to improve processing speed.
 
 ### Example Illustration
 
@@ -54,7 +53,7 @@ Below is an example illustration from Nester:
 
 ![Nester Illustration](Nester_image.png)
 
-### References
+### Results
 
-For more information, refer to the official Nester documentation.
+We include the predictions of Nester in our dataset and its ablation results in the ```predictions/``` folder
 
