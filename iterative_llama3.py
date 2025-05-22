@@ -362,8 +362,7 @@ with open(os.path.join("./data", "./testset_source.json")) as f:
     testset = json.load(f)
 with open(os.path.join("./data", "./testset_usertypes.json")) as f:
     test_user_types = json.load(f)
-with open("./data/testset_staticsliced_hop3.json") as f:
-    testset_return = json.load(f)
+
 
 with open("./NSTI_local_preprocessed.json") as f:
     NSTI_local = json.load(f)
@@ -438,12 +437,12 @@ def main(
 
             #found3 = find_string_in_file(filename3, search_string, exact_match=False)
             ## found4 = find_string_in_file(filename4, search_string, exact_match=Fal0se)
-            # 0.687
-            if found1:  # 0.722
+            
+            if found1: 
                 NSTI[key] = redundancy2[key]
-            #if found2:  # 0.730
+            #if found2:  
             #    NSTI[key] = redundancy3[key]
-            #if found3:  # 0.739#
+            #if found3:  
             #    NSTI[key] = redundancy4[key]
         elif parts[-1] == "arg":
 
@@ -467,12 +466,11 @@ def main(
             #found3 = find_string_in_file(filename3, search_string, exact_match=False)
             # found4 = find_string_in_file(filename4, search_string, exact_match=Fal0se)
             # 0.633
-            if found1:  # 0.73 #0.695
+            if found1: 
                 NSTI[key] = redundancy2[key]
-            if found2:  # 0.745 #0.703
+            if found2: 
                 NSTI[key] = redundancy3[key]
-            #if found3:  # 0.769
-            #    NSTI[key] = redundancy4[key]
+
 
         elif parts[-1] == "return":
 

@@ -22,19 +22,22 @@ pip install -r requirements.txt
 unzip data/data.zip -d path/to/data
 ```
 
-3. Set up language models such as Llama and CodeLlama locally:
+2. Set up language models such as Llama and CodeLlama locally:
    - Llama: https://ai.meta.com/llama/
    - CodeLlama: https://ai.meta.com/blog/large-language-model-llama-codellama/
-
-4. Run Nester on CodeLlama with the dataset using the following command:
-```bash
-torchrun --nproc_per_node=[number of nodes] nester.py --ckpt_dir=[checkpoint directory] --tokenizer_path=[tokenizer model path] --max_seq_len=[maximum sequence length] --max_batch_size=[maximum batch size]
+3. Generate high-level programs using these LLMs.
 ```
-The following command example shows how to set sequence length and batch size to run code with the codelama-7B-instruct version checkpoint and word divider:
-```bash
-torchrun --nproc_per_node=1 nester.py --ckpt_dir=CodeLlama-7b-Instruct/ --tokenizer_path=CodeLlama-7b-Instruct/tokenizer.model --max_seq_len=2048 --max_batch_size=4
+python high_level.py
 ```
-This command executes the 'nester.py' script on a single processing node, using the specified checkpoint directory and the classifier model path, while setting the maximum sequence length to 2048 and the batch size to 4.
+You can also use 
+```
+high_level_right_answer.py
+```
+to generate high-level programs more quickly.
+4. Run the interpreters to execute the programs.
+```
+python progrema interpreter.py
+```
 
 ### Evaluate
 
