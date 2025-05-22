@@ -31,12 +31,13 @@ python high_level.py
 ```
 You can also use 
 ```
-high_level_right_answer.py
+python high_level_right_answer.py
 ```
 to generate high-level programs more quickly.
+
 4. Run the interpreters to execute the programs.
 ```
-python progrema interpreter.py
+python program_interpreter.py
 ```
 
 ### Evaluate
