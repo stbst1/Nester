@@ -29,11 +29,6 @@ unzip data/data.zip -d path/to/data
 ```
 python high_level.py
 ```
-You can also use 
-```
-python high_level_right_answer.py
-```
-to generate high-level programs more quickly.
 
 4. Run the interpreters to execute the programs.
 ```
